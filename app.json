@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "contraCovid",
-    "slug": "contraCovid",
+    "name": "Cuidados contra o Covid-19",
+    "slug": "CuidadosCovid19",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#178A8A"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

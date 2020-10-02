@@ -9,7 +9,7 @@ export default function CardHistorico() {
                 <View>
                     <Image
                         source={require('../../../../assets/img/mascara.png')}
-                        style={{ width: 40, height: 40, marginRight: 20 }}
+                        style={{ width: 30, height: 30, marginRight: 20 }}
                         resizeMode="contain"
                     />
                 </View>

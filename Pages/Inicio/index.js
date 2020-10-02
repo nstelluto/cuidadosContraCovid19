@@ -1,23 +1,35 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import Modal from './Modal';
 
 
 export default function Home() {
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(true);
+    };
+    const issoAlteraOMeuEstado = (value) => {
+        setModalVisible(value);
+    };
     return (
         <ScrollView style={{ width: "100%", padding: "5%", marginTop: 5 }}>
             <View style={styles.envolveText}>
                 <Text style={styles.textInicio}>Trocar a máscara</Text>
             </View>
             <View style={{ width: "100%", flexDirection: "row", alignItems: "center", justifyContent: "center", marginTop: 50 }}>
-                <View style={styles.Button}>
-                    <Image
-                        style={{ width: "100%", height: 230 }}
-                        source={require('../../assets/img/mascara3x.png')}
-                        resizeMode="cover"
-                    />
-                </View>
+                <TouchableOpacity onPress={toggleModal}>
+                    <View style={styles.Button}>
+                        <Image
+                            style={{ width: "100%", height: 230 }}
+                            source={require('../../assets/img/mascara3x.png')}
+                            resizeMode="cover"
+                        />
+                    </View>
+                </TouchableOpacity>
             </View>
             <View style={{ width: "100%", flexDirection: "column", alignItems: "center", justifyContent: "center", marginTop: 25 }}>
+                <Modal params={isModalVisible} setStateDoPapaizineo={issoAlteraOMeuEstado} />
                 <Image
                     style={{ width: 30, height: 30 }}
                     source={require('../../assets/img/up-arrow3x.png')}

@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Switch, TouchableOpacity, ScrollView } from 'react-native';
+import ModalSom from './Modais/ModalSom';
+import ModalModo from './Modais/ModalModo';
 
-function onPress() {
-    console.log('fsfjj')
-}
 export default function Configuracoes() {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+    const [isModalVisibleS, setModalVisibleS] = useState(false);
+    const [isModalVisibleM, setModalVisibleM] = useState(false);
+
+    const toggleModalSom = () => {
+        setModalVisibleS(true);
+    };
+    const modalSom = (value) => {
+        setModalVisibleS(value);
+    };
+    const toggleModalModo = () => {
+        setModalVisibleM(true);
+    };
+    const modalModo = (value) => {
+        setModalVisibleM(value);
+    };
     return (
         <ScrollView style={{ width: "100%", padding: "5%" }}>
             <View style={styles.envolveText}>
@@ -23,19 +37,21 @@ export default function Configuracoes() {
                         accessibilityLabel="Notificação"
                     />
                 </View>
-                <TouchableOpacity onPress={onPress}>
+                <TouchableOpacity onPress={toggleModalSom}>
                     <View style={styles.envolveConf}>
                         <Text style={styles.textConf}>Som da notificação</Text>
                         <Text style={styles.textConfSelect}>Hello</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={onPress}>
+                <TouchableOpacity onPress={toggleModalModo}>
                     <View style={styles.envolveConf}>
                         <Text style={styles.textConf}>Modo de notificação</Text>
                         <Text style={styles.textConfSelect}>Soar e vibrar</Text>
                     </View>
                 </TouchableOpacity>
             </View>
+            <ModalModo params={isModalVisibleM} setModalModo={modalModo} />
+            <ModalSom params={isModalVisibleS} setModalSom={modalSom} />
         </ScrollView>
     );
 }
