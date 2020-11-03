@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import CardHistorico from './components/cardHistory';
 
-
 export default function Historico() {
+
     return (
         <ScrollView style={{ width: "100%", padding: "5%", marginTop: 5 }}>
             <View style={styles.envolveText}>

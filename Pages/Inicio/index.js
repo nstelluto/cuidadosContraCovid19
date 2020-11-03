@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import Modal from './Modal';
+import axios from 'axios';
 
 
 export default function Home() {
@@ -8,10 +9,41 @@ export default function Home() {
 
     const toggleModal = () => {
         setModalVisible(true);
+        trocouMascara();
     };
     const issoAlteraOMeuEstado = (value) => {
         setModalVisible(value);
     };
+    async function Login() {
+
+
+        await axios.post('https://apiappcovid.000webhostapp.com/login', {
+            login_key: '1644666',
+        })
+            .then(function (response) {
+
+            })
+            .catch(function (error) {
+
+            });
+    }
+    useEffect(() => {
+        Login();
+    })
+
+    async function trocouMascara() {
+        await axios.post('https://apiappcovid.000webhostapp.com/history', {
+            login_key: '1644666',
+            title: 'Trocou a máscara'
+        })
+            .then(function (response) {
+
+            })
+            .catch(error => {
+
+            });
+    }
+
     return (
         <ScrollView style={{ width: "100%", padding: "5%", marginTop: 5 }}>
             <View style={styles.envolveText}>

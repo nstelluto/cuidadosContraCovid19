@@ -1,26 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Switch, TouchableOpacity, ScrollView } from 'react-native';
-import ModalSom from './Modais/ModalSom';
-import ModalModo from './Modais/ModalModo';
+import axios from 'axios';
 
 export default function Configuracoes() {
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-    const [isModalVisibleS, setModalVisibleS] = useState(false);
-    const [isModalVisibleM, setModalVisibleM] = useState(false);
+    const [isEnabled, setIsEnabled] = useState("");
 
-    const toggleModalSom = () => {
-        setModalVisibleS(true);
+    const toggleSwitch = () => {
+        setIsEnabled(previousState => !previousState);
+
     };
-    const modalSom = (value) => {
-        setModalVisibleS(value);
-    };
-    const toggleModalModo = () => {
-        setModalVisibleM(true);
-    };
-    const modalModo = (value) => {
-        setModalVisibleM(value);
-    };
+    useEffect(() => {
+        PushNotification();
+
+    }, [isEnabled]);
+    useEffect(() => {
+        Notificacao();
+    }, []);
+    async function PushNotification() {
+        await axios.post('https://apiappcovid.000webhostapp.com/configuration', {
+            login_key: "1644666",
+            notification: isEnabled
+        })
+            .then(function (response) {
+            })
+            .catch(function (error) {
+
+            });
+    }
+    async function Notificacao() {
+        await axios.get('https://apiappcovid.000webhostapp.com/configuration?login_key=1644666', {
+        })
+            .then(function (response) {
+                let enable = response.data.notification;
+                if (enable == 1) {
+                    setIsEnabled(true)
+                } else {
+                    setIsEnabled(false)
+                }
+            })
+            .catch(error => {
+            });
+    }
+
     return (
         <ScrollView style={{ width: "100%", padding: "5%" }}>
             <View style={styles.envolveText}>
@@ -33,25 +54,12 @@ export default function Configuracoes() {
                         trackColor={{ false: "#767577", true: "#178A8A" }}
                         thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
                         onValueChange={toggleSwitch}
+
                         value={isEnabled}
                         accessibilityLabel="Notificação"
                     />
                 </View>
-                <TouchableOpacity onPress={toggleModalSom}>
-                    <View style={styles.envolveConf}>
-                        <Text style={styles.textConf}>Som da notificação</Text>
-                        <Text style={styles.textConfSelect}>Hello</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={toggleModalModo}>
-                    <View style={styles.envolveConf}>
-                        <Text style={styles.textConf}>Modo de notificação</Text>
-                        <Text style={styles.textConfSelect}>Soar e vibrar</Text>
-                    </View>
-                </TouchableOpacity>
             </View>
-            <ModalModo params={isModalVisibleM} setModalModo={modalModo} />
-            <ModalSom params={isModalVisibleS} setModalSom={modalSom} />
         </ScrollView>
     );
 }
